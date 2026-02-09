@@ -18,11 +18,15 @@ export default function ResultPage() {
           return;
         }
 
-        const res = await fetch("http://localhost:5001/api/results", {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/results`,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
-          },
-        });
+         },
+      }
+   );
+
 
         if (!res.ok) {
           const errData = await res.json();
