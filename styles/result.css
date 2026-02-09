@@ -1,0 +1,11 @@
+.result {
+  padding: 16px;
+}
+
+.score {
+  background: #1e293b;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  text-align: center;
+}

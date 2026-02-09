@@ -1,0 +1,35 @@
+.mock {
+  padding: 16px;
+}
+
+.timer {
+  position: sticky;
+  top: 0;
+  background: #020617;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 10;
+}
+
+.qcard {
+  background: #1e293b;
+  margin: 12px 0;
+  padding: 14px;
+  border-radius: 12px;
+}
+
+label {
+  display: block;
+  margin-top: 8px;
+}
+
+.submit {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  background: #22c55e;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+}
