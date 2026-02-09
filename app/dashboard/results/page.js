@@ -18,14 +18,18 @@ export default function ResultPage() {
           return;
         }
 
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/results`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-         },
-      }
-   );
+       const res = await fetch(
+  `${process.env.NEXT_PUBLIC_API_BASE_URL}/results`,
+  {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    credentials: "include", // 🔥 এই লাইন
+  }
+);
+
 
 
         if (!res.ok) {
