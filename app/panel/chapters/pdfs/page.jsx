@@ -8,17 +8,26 @@ export default function AddPdf() {
   const [link, setLink] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/chapters/class/CLASS_ID_HERE")
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/chapters/class/CLASS_ID_HERE`
+    )
       .then(r => r.json())
       .then(setChapters);
   }, []);
 
   const submit = async () => {
-    await fetch("http://localhost:5001/api/pdfs/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, drive_link: link, chapter_id: chapterId })
-    });
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/pdfs/add`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          drive_link: link,
+          chapter_id: chapterId,
+        }),
+      }
+    );
     alert("PDF added");
   };
 
