@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL; // ends with /api
+
 export default function MockTestPage() {
   const { mockID } = useParams();
   const router = useRouter();
@@ -27,18 +29,19 @@ export default function MockTestPage() {
       try {
         const token = localStorage.getItem("token");
 
-        // ✅ fetch mock directly by ID
-        const mockRes = await fetch(
-          `http://localhost:5001/api/mocks`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        // fetch all mocks (BASE already has /api)
+        const mockRes = await fetch(`${API_BASE_URL}/mocks`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-        const allMocks = await mockRes.json();
-        const foundMock = allMocks.find((m) => m._id === mockID);
+        const mockJson = await mockRes.json();
+        const mocksArray = Array.isArray(mockJson)
+          ? mockJson
+          : mockJson.data || [];
+
+        const foundMock = mocksArray.find((m) => m._id === mockID);
 
         if (!foundMock) {
           setLoading(false);
@@ -48,9 +51,9 @@ export default function MockTestPage() {
         setMock(foundMock);
         setTimeLeft((foundMock.duration || 30) * 60);
 
-        // ✅ fetch questions
+        // fetch questions for this mock
         const qRes = await fetch(
-          `http://localhost:5001/api/mocks/${mockID}/questions`,
+          `${API_BASE_URL}/mocks/${mockID}/questions`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -59,7 +62,7 @@ export default function MockTestPage() {
         );
 
         const qData = await qRes.json();
-        setQuestions(Array.isArray(qData) ? qData : []);
+        setQuestions(Array.isArray(qData) ? qData : qData.data || []);
       } catch (err) {
         console.error("Mock load error:", err);
       } finally {
@@ -114,7 +117,7 @@ export default function MockTestPage() {
   };
 
   /* ===============================
-     SUBMIT TEST
+     SUBMIT TEST (FIXED URL)
   =============================== */
   const handleSubmit = async () => {
     if (submitted) return;
@@ -141,7 +144,7 @@ export default function MockTestPage() {
     try {
       const token = localStorage.getItem("token");
 
-      await fetch("http://localhost:5001/api/results/save", {
+      await fetch(`${API_BASE_URL}/results/save`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
