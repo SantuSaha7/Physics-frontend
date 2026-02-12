@@ -31,6 +31,7 @@ export default function PanelLayout({ children }) {
 
   return (
     <div style={{ minHeight: '100vh', background: '#020617' }}>
+      
       {/* ===== OVERLAY (MOBILE) ===== */}
       {open && (
         <div
@@ -74,24 +75,36 @@ export default function PanelLayout({ children }) {
 
         {/* NAV */}
         <nav style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          
           <Link onClick={() => setOpen(false)} href="/panel/dashboard" style={linkStyle(isActive('/panel/dashboard'))}>
             📊 Dashboard
           </Link>
+
           <Link onClick={() => setOpen(false)} href="/panel/classes" style={linkStyle(isActive('/panel/classes'))}>
             🏫 Classes
           </Link>
+
           <Link onClick={() => setOpen(false)} href="/panel/chapters" style={linkStyle(isActive('/panel/chapters'))}>
             📚 Chapters
           </Link>
+
           <Link onClick={() => setOpen(false)} href="/panel/students" style={linkStyle(isActive('/panel/students'))}>
             👨‍🎓 Students
           </Link>
+
+          {/* ✅ NEW FEES SECTION */}
+          <Link onClick={() => setOpen(false)} href="/panel/fees" style={linkStyle(isActive('/panel/fees'))}>
+            💰 Fees
+          </Link>
+
           <Link onClick={() => setOpen(false)} href="/panel/mocks" style={linkStyle(isActive('/panel/mocks'))}>
             📝 Mock Tests
           </Link>
+
           <Link onClick={() => setOpen(false)} href="/panel/results" style={linkStyle(isActive('/panel/results'))}>
             📈 Results
           </Link>
+
         </nav>
 
         {/* LOGOUT */}
